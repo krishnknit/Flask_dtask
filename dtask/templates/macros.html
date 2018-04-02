@@ -1,0 +1,149 @@
+{% macro form_field(field) -%}
+	{% set with_label = kwargs.pop('with_label', False) %}
+	{% set placeholder = kwargs.pop('placeholder', '') %}
+	{% if not with_label %}
+		{% set placeholder = field.label.text %}
+	{% endif %}
+
+	<div class="control-group {% if field.errors %}error{% endif %}">
+		<div class="row">
+			{% if with_label %}
+				<div class="col-md-3">
+					<label for="{{ field.id }}" class="control-label">
+						{{ field.label.text }}{% if field.flags.required %} {% endif %}
+					</label>
+				</div>
+			{% endif %}
+			<div class="controls">
+				<div class="col-md-9">
+					{% set class_ = kwargs.pop('class_', '') %}
+            		{% if field.flags.required %}
+                		{% set class_ = class_ + ' required' %}
+					{% endif %}
+					{% if field.type == 'BooleanField' %}
+						<label class="checkbox">
+							{{ field(class_=class_, **kwargs) }}
+							{{ field.label.text|safe }}
+						</label>
+					{% else %}
+						{% if field.type in ('TextField', 'TextAreaField', 'PasswordField') %}
+							{% set class_ = class_ + ' input-xlarge' %}
+						{% elif field.type == 'FileField' %}
+							{% set class_ = class_ + ' input-file' %}
+						{% endif %}
+						{{ field(class_=class_, placeholder=placeholder, **kwargs) }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% if field.errors %}
+			<div class="row">
+				{% for error in field.errors %}
+					<div class="alert alert-block alert-danger">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<strong>Oh Snap! </strong>{{ error }}
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		{% if field.description %}
+			<p class="help-block">{{ field.description|safe }}</p>
+		{% endif %}
+		{% if not field.errors %}
+		{% endif %}
+	</div>
+{%- endmacro %}
+
+{% macro dbtable(dictlist, name, order='', suppressed='') -%}
+	<div class="table-responsive">
+		<table id='{{ name }}' name='{{ name }}' class="display">
+			<thead>
+				<tr>
+					{%- if order %}
+						{%- for title in order %}
+							{%- if title not in suppressed %}
+								<th>{{title|capitalize| replace("_", " ")}}</th>
+							{%- endif %}
+						{%- endfor %}
+					{%- else %}
+						{%- for item in dictlist %}
+							{%- for key, value in item.iteritems %}
+								{%- if loop.first %}
+									<th>{{key}}</th>
+								{%- endif %}
+							{%- endfor %}
+						{%- endfor %}
+					{%- endif %}
+				</tr>
+			</thead>
+
+			<tbody>
+				{%- for item in dictlist %}
+				<tr>
+					{%- for ord in order %}
+						{%- if ord in suppressed %}
+						{%- elif "[" and "," in item[ord]|string() %}
+							<td>{{item[ord] | replace("[", "") | replace("u'", "") | replace("']", "") | replace("',", "") }}</td>
+						{%- else %}
+							<td>{{item[ord] | urlize}}</td>
+						{%- endif %}
+					{%- endfor %}
+				</tr>
+				{%- endfor %}
+			</tbody>
+
+			<tfoot>
+				<tr>
+					{%- if order %}
+						{%- for title in order %}
+							{%- if title not in suppressed %}
+								<th>{{title|capitalize| replace("_", " ")}}</th>
+							{%- endif %}
+						{%- endfor %}
+					{%- else %}
+						{%- for item in dictlist %}
+							{%- for key, value in item.iteritems %}
+								{%- if loop.first %}
+									<th>{{key}}</th>
+								{%- endif %}
+							{%- endfor %}
+						{%- endfor %}
+					{%- endif %}
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+{%- endmacro %}
+
+{% macro navcontrol(navdict, title) %}
+	{% for section in navdict|dictsort %}
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ section[0] }}<span class="caret sr-only">(current)</span></a>
+			<ul class="dropdown-menu">
+				{%- for item in navdict[section[0]]|dictsort(by="key") %}
+					<li>
+						{%- if section[0] == 'Scenario' %}
+							<a href="{{ item[1] }}">{{ item[0] }}</a>
+						{%- endif %}
+
+						{%- if section[0] == 'QA' %}
+							<a href="{{ item[1] }}">{{ item[0] }}</a>
+						{%- endif %}
+
+						{%- if section[0] == 'Risc Data Control' %}
+							<a href="{{ item[1] }}">{{ item[0] }}</a>
+						{%- endif %}
+
+						{%- if section[0] == 'Download Data' %}
+							<a href="{{ item[1] }}">{{ item[0] }}</a>
+						{%- endif %}
+
+						{%- if section[0] == 'Miscellaneous' %}
+							<a href="{{ item[1] }}">{{ item[0] }}</a>
+						{%- endif %}
+					</li>
+				{%- endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+{% endmacro %}

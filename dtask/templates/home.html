@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% import "macros.html" as macros %}
+
+{% block scripts %}
+	{{ super() }}
+
+	<style>
+		#events {
+				margin-bottom: 1em;
+				padding: 1em;
+				background-color: #f6f6f6;
+				border: 1px solid #999;
+				border-radius: 3px;
+				height: 13px;
+				overflow: auto;
+		}
+		table.dataTable tbody th, table.dataTable tbody td {
+				padding: 1px 2px;
+				line-height: 11px;
+		}
+		.dataTables_wrapper .dt-buttons {
+				float: none;
+				text-align: center;
+		}
+		.row_selected tr {
+				background-color: grey;
+		}
+		.row_selected td {
+				background-color: grey;
+		}
+
+		.hidden {
+				display: none; 
+		}
+		.positionDiv {
+				position: absolute;
+				width: 75px;
+				height: 75px;
+				background: #080;
+		}
+
+	</style>
+
+
+{% endblock %}
+{% block  content %}
+{% include 'macros.html' %}
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="well well-lg" style="background-color: lightgrey">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div align="center">
+                            <h2>Welcome to Data Analysis Portal</h2>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

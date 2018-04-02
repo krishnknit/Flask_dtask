@@ -1,0 +1,41 @@
+<!-- Navigation Bar -->
+
+{%- set navdict = { "Scenario": {
+								"Create MBSD": url_for('scenarios.createMBSD'),
+								"Create BSD": url_for('scenarios.createBSD'),
+								"Create NSE": url_for('scenarios.createNSE'),
+								"Run Analysis": url_for('scenarios.run_analysis')
+								},
+					"QA": {
+								"Google Home": "http://google.com",
+								"Google": "http://google.co.in",
+								"Yahoo": "http://youtube.com",
+								},
+					"Risc Data Control": {
+								"Google Home": "http://google.com",
+								"Google": "http://google.co.in",
+								"Yahoo": "http://youtube.com",
+								},
+					"Miscellaneous": {
+								"Google Home": "http://google.com",
+								"Google": "http://google.co.in",
+								"Yahoo": "http://youtube.com",
+								},
+					"Download Data": {
+										"CD/CP Data": url_for('download.download_cdcp'),
+										"Excel": 'download.download_excel',
+										"Database": 'download.download_database'
+									 },
+				}  -%}
+
+{% import "macros.html" as macros %}
+{% block nav %}
+	<nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="Navigation">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="{{ url_for('home') }}">Data Analysis</a>
+			<ul class="nav navbar-nav">
+				{{ macros.navcontrol(navdict) }}
+			</ul>
+		</div>
+	</nav>
+{% endblock %}

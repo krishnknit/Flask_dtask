@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% import "macros.html" as macros %}
+{% block scripts %}
+    {{ super() }}
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+         var table = $('#urls').DataTable();
+         $("#urls thead th").each( function ( i ){
+            var name = table.column( i ).header();
+            var spanelt = document.createElement( "button" );
+            spanelt.innerHTML = name.innerHTML;
+
+            $(spanelt).addClass("colvistoggle");
+            $(spanelt).attr("colidx", i);
+
+            $(spanelt).on( 'click', function (e) {
+               e.defaultPrevented();
+               // get column API object
+               var column = table.column( $(this).attr('colidx') );
+               // toggle the visivility
+               column.visible( ! column.visible() );
+            });
+            $("#colvis").append($(spanelt));
+         });
+      });
+
+    </script>
+
+{% endblock %}
+{% block  content %}
+
+<div class="row">
+   <div class="col-lg-1"></div>
+   <div class="col-lg-10">
+      <div class="well well-lg" style="width:100%;overflow-x: auto;overflow-y: auto;">
+         <div class="table-responsive">
+            <table id="urls" name='urls' class="display" cellspacing="0" width="100%">
+               <thead>
+                  <th>Record Type</th>
+                  <th>Date</th>
+                  <th>Rank from Top</th>
+                  <th>Rank from Bottom</th>
+                  <th>Driver</th>
+               </thead>
+               <tfoot>
+                  <th>Record Type</th>
+                  <th>Date</th>
+                  <th>Rank from Top</th>
+                  <th>Rank from Bottom</th>
+                  <th>Driver</th>
+               </tfoot>
+               <tbody>
+                  {%- for row in rows %}
+                     <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock %}

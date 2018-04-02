@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% import "macros.html" as macros %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+      $( function() {
+        $( ".dtpick" ).datepicker();
+      } );
+    </script>
+
+{% endblock %}
+{% block  content %}
+{% include 'macros.html' %}
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="well well-lg" style="background-color: lightgrey">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div align="center">
+                            <u><h2>Download CD/CP data</h2></u>
+                        </div>
+                        {% if "Download" in title %}
+                            <form class="form-horizontal" method="POST" name="url" action="{{url_for('download.download_cdcp')}}">
+                        {% endif %}
+
+                            {{form.hidden_tag()}}
+
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.start_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.end_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 50px">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </div>
+                            {# {{form.errors}} #}
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

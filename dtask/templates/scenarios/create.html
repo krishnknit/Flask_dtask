@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% import "macros.html" as macros %}
+
+{% block scripts %}
+    {{ super() }}
+
+    <script>
+      $( function() {
+        $( ".dtpick" ).datepicker();
+      } );
+    </script>
+
+{% endblock %}
+{% block  content %}
+{% include 'macros.html' %}
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="well well-lg" style="background-color: lightgrey">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row">
+                        {% if "create MBSD" in title %}
+                            <div align="center">
+                                <u><h2>MBSD Scenario Generation</h2></u>
+                            </div>
+                            <form class="form-horizontal" method="POST" name="url" action="{{url_for('scenarios.createMBSD')}}">
+                        {% endif %}
+                        {% if "create BSD" in title %}
+                            <div align="center">
+                                <u><h2>BSD Scenario Generation</h2></u>
+                            </div>
+                            <form class="form-horizontal" method="POST" name="url" action="{{url_for('scenarios.createBSD')}}">
+                        {% endif %}
+                        {% if "NSE" in title %}
+                            <div align="center">
+                                <u><h2>NSE Scenario Generation</h2></u>
+                            </div>
+                            <form class="form-horizontal" method="POST" name="url" action="{{url_for('scenarios.createNSE')}}">
+                        {% endif %}
+
+                            {{form.hidden_tag()}}
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.default_scenario_set, with_label=False, placeholder="", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.scenario_set_name, with_label=True, placeholder="scenario name", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.scenario_set_desc, with_label=True, placeholder="description", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.lock_back_period, with_label=True, placeholder="", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.start_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.end_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.effective_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.expiry_date, with_label=True, placeholder="mm/dd/yyyy", class_="dtpick")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.liquidation_horizon, with_label=True, placeholder="", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 10px">
+                                <div class="col-md-11">
+                                    {{macros.form_field(form.liquidation_period, with_label=True, placeholder="", class_="form-control")}}
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top: 50px">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block">GENERATE</button>
+                                </div>
+                            </div>
+                            {# {{form.errors}} #}
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

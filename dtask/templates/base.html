@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% block title %}
+		{% if title %}
+			<title>{{ title }}</title>
+		{% else %}
+			<title>Data Analysis</title>
+		{% endif %}
+	{% endblock %}
+
+	{% block styles %}
+		<!-- Bootstrap CSS -->
+		<link href="/static/css/bootstrap.css" rel="stylesheet" media="screen">
+
+		<!-- Background color -->
+		<style>body {backgroud-color: darkgrey}</style>
+	{% endblock %}
+
+	{% block meta %}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	{% endblock %}
+</head>
+<body style="padding-top: 70px;">
+	{% include 'nav.html' %}
+
+	<div class="container">
+		<br/>
+		<div>{% include 'flash.html' %}</div>
+	</div>
+	<div class="row">
+		{% block content %}
+		{% endblock %}
+	</div>
+
+	{% block scripts %}
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="/static/js/bootstrap.js"></script>	
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+		<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript">
+			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
+	{% endblock %}
+
+</body>
+</html>
