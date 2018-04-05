@@ -1,6 +1,6 @@
 from dtask import app
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField, DateField, BooleanField
+from wtforms import StringField, TextAreaField, SelectField, DateField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Optional
 from os.path import join, isfile
 import os
@@ -37,6 +37,7 @@ class ScenariosForm(FlaskForm):
 	liquidation_horizon = SelectField('Liquidation Horizon', choices=choice)
 	liquidation_period = SelectField('Rankings per Up/Down Selection', choices=choice)
 	
+	
 class RunAnalysisForm(FlaskForm):
 	"""docstring for RunAnalysisForm"""
 	get_files()
@@ -45,6 +46,9 @@ class RunAnalysisForm(FlaskForm):
 
 	currentIdxFile = SelectField('Current Idx File:', choices=choiceIdxFiles)
 	previousIdxFile = SelectField('Previous Idx File:', choices=choiceIdxFiles)
+
+	compare_excel = SubmitField(label='Compare Excel')
+	generate_excel = SubmitField(label='Generate Excel')
 
 	
 
